@@ -1,6 +1,7 @@
 package com.nanos.msscbeerorderservice.services.beer;
 
-import com.nanos.msscbeerorderservice.web.model.BeerDto;
+
+import com.nanos.brewery.model.BeerDto;
 
 import java.util.Optional;
 import java.util.UUID;

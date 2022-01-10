@@ -1,7 +1,7 @@
 package com.nanos.msscbeerorderservice.web.mappers;
 
+import com.nanos.brewery.model.BeerOrderLineDto;
 import com.nanos.msscbeerorderservice.domain.BeerOrderLine;
-import com.nanos.msscbeerorderservice.web.model.BeerOrderLineDto;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 

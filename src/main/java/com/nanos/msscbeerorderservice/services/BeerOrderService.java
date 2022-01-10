@@ -1,7 +1,7 @@
 package com.nanos.msscbeerorderservice.services;
 
-import com.nanos.msscbeerorderservice.web.model.BeerOrderDto;
-import com.nanos.msscbeerorderservice.web.model.BeerOrderPagedList;
+import com.nanos.brewery.model.BeerOrderDto;
+import com.nanos.brewery.model.BeerOrderPagedList;
 import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;

@@ -1,8 +1,8 @@
 package com.nanos.msscbeerorderservice.web.controllers;
 
+import com.nanos.brewery.model.BeerOrderDto;
+import com.nanos.brewery.model.BeerOrderPagedList;
 import com.nanos.msscbeerorderservice.services.BeerOrderService;
-import com.nanos.msscbeerorderservice.web.model.BeerOrderDto;
-import com.nanos.msscbeerorderservice.web.model.BeerOrderPagedList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;

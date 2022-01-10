@@ -1,13 +1,13 @@
 package com.nanos.msscbeerorderservice.services;
 
+import com.nanos.brewery.model.BeerOrderDto;
+import com.nanos.brewery.model.BeerOrderPagedList;
 import com.nanos.msscbeerorderservice.domain.BeerOrder;
+import com.nanos.msscbeerorderservice.domain.BeerOrderStatusEnum;
 import com.nanos.msscbeerorderservice.domain.Customer;
 import com.nanos.msscbeerorderservice.repositories.BeerOrderRepository;
 import com.nanos.msscbeerorderservice.repositories.CustomerRepository;
 import com.nanos.msscbeerorderservice.web.mappers.BeerOrderMapper;
-import com.nanos.msscbeerorderservice.web.model.BeerOrderDto;
-import com.nanos.msscbeerorderservice.web.model.BeerOrderPagedList;
-import com.nanos.msscbeerorderservice.web.model.OrderStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -67,7 +67,7 @@ public class BeerOrderServiceImpl implements BeerOrderService {
             BeerOrder beerOrder = beerOrderMapper.dtoToBeerOrder(beerOrderDto);
             beerOrder.setId(null); //should not be set by outside client
             beerOrder.setCustomer(customerOptional.get());
-            beerOrder.setOrderStatus(OrderStatusEnum.NEW);
+            beerOrder.setOrderStatus(BeerOrderStatusEnum.NEW);
 
             beerOrder.getBeerOrderLines().forEach(line -> line.setBeerOrder(beerOrder));
 
@@ -92,7 +92,7 @@ public class BeerOrderServiceImpl implements BeerOrderService {
     @Override
     public void pickupOrder(UUID customerId, UUID orderId) {
         BeerOrder beerOrder = getOrder(customerId, orderId);
-        beerOrder.setOrderStatus(OrderStatusEnum.PICKED_UP);
+        beerOrder.setOrderStatus(BeerOrderStatusEnum.PICKED_UP);
 
         beerOrderRepository.save(beerOrder);
     }

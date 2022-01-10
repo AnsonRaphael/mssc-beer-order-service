@@ -1,11 +1,11 @@
 package com.nanos.msscbeerorderservice.services;
 
+import com.nanos.brewery.model.BeerOrderDto;
+import com.nanos.brewery.model.BeerOrderLineDto;
 import com.nanos.msscbeerorderservice.bootstrap.BeerOrderBootStrap;
 import com.nanos.msscbeerorderservice.domain.Customer;
 import com.nanos.msscbeerorderservice.repositories.BeerOrderRepository;
 import com.nanos.msscbeerorderservice.repositories.CustomerRepository;
-import com.nanos.msscbeerorderservice.web.model.BeerOrderDto;
-import com.nanos.msscbeerorderservice.web.model.BeerOrderLineDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
