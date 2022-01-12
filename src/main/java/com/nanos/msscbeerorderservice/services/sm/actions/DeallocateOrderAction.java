@@ -1,6 +1,6 @@
 package com.nanos.msscbeerorderservice.services.sm.actions;
 
-import com.nanos.brewery.model.events.ValidateOrderRequest;
+import com.nanos.brewery.model.events.DeallocateOrderRequest;
 import com.nanos.msscbeerorderservice.config.JmsConfig;
 import com.nanos.msscbeerorderservice.domain.BeerOrder;
 import com.nanos.msscbeerorderservice.domain.BeerOrderEventEnum;
@@ -19,23 +19,25 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
-@Component
 @RequiredArgsConstructor
-public class ValidateOrderAction implements Action<BeerOrderStatusEnum, BeerOrderEventEnum> {
+@Component
+public class DeallocateOrderAction implements Action<BeerOrderStatusEnum, BeerOrderEventEnum> {
+
+    private final JmsTemplate jmsTemplate;
     private final BeerOrderRepository beerOrderRepository;
     private final BeerOrderMapper beerOrderMapper;
-    private final JmsTemplate jmsTemplate;
+
     @Override
-    public void execute(StateContext<BeerOrderStatusEnum, BeerOrderEventEnum> stateContext) {
-        String beerOrderId = (String) stateContext.getMessage().getHeaders().get(BeerOrderManagerImpl.ORDER_ID_HEADER);
+    public void execute(StateContext<BeerOrderStatusEnum, BeerOrderEventEnum> context) {
+        String beerOrderId = (String) context.getMessage().getHeaders().get(BeerOrderManagerImpl.ORDER_ID_HEADER);
         Optional<BeerOrder> beerOrderOptional = beerOrderRepository.findById(UUID.fromString(beerOrderId));
 
         beerOrderOptional.ifPresentOrElse(beerOrder -> {
-            jmsTemplate.convertAndSend(JmsConfig.VALIDATE_ORDER_QUEUE, ValidateOrderRequest.builder()
-                    .beerOrder(beerOrderMapper.beerOrderToDto(beerOrder))
-                    .build());
-        }, () -> log.error("Order Not Found. Id: " + beerOrderId));
-
-        log.debug("Sent Validation request to queue for order id " + beerOrderId);
+            jmsTemplate.convertAndSend(JmsConfig.DEALLOCATE_ORDER_QUEUE,
+                    DeallocateOrderRequest.builder()
+                            .beerOrderDto(beerOrderMapper.beerOrderToDto(beerOrder))
+                            .build());
+            log.debug("Sent Deallocation Request for order id: " + beerOrderId);
+        }, () -> log.error("Beer Order Not Found!"));
     }
 }

@@ -14,7 +14,7 @@ import java.util.UUID;
 @ConfigurationProperties(prefix = "com.nanos.brewery", ignoreUnknownFields = false)
 public class BeerServiceImpl implements BeerService {
     public final String BEER_PATH_V1 = "/api/v1/beer/";
-    public final String BEER_UPC_PATH_V1 = "/api/v1/beerUpc/";
+    public static final String BEER_UPC_PATH_V1 = "/api/v1/beerUpc/";
     private final RestTemplate restTemplate;
     public BeerServiceImpl(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
